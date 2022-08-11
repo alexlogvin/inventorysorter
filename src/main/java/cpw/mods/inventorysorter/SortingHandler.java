@@ -27,10 +27,13 @@ import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.*;
 
 import javax.annotation.*;
+import java.util.Iterator;
 import java.util.function.*;
 
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author cpw
@@ -123,10 +126,10 @@ public enum SortingHandler implements Consumer<ContainerContext>
         }
 
         InventorySorter.INSTANCE.debugLog("Container \"{}\" being sorted", ()->new String[] {containerTypeName.toString()});
-        final UnmodifiableIterator<Multiset.Entry<ItemStackHolder>> itemsIterator;
+        final Iterator<Multiset.Entry<ItemStackHolder>> itemsIterator;
         try
         {
-            itemsIterator = Multisets.copyHighestCountFirst(itemcounts).entrySet().iterator();
+            itemsIterator = itemcounts.entrySet().iterator();
         }
         catch (Exception e)
         {
